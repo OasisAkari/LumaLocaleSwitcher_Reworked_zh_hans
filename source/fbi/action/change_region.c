@@ -14,7 +14,6 @@
 // TODO duplicate code? (see section/config.c)
 typedef struct {
     list_item_old items[RGN_MAX];
-    linked_list* title_data;
     list_item* selected;
     u32 count;
     Handle cancelEvent;
@@ -87,6 +86,11 @@ static void region_update(ui_view* view, void* data, list_item_old** items, u32*
 }
 
 void action_change_region(linked_list* items, list_item* selected) {
+    title_info* info = (title_info*)selected ->data;
+    if (info->mediaType == MEDIATYPE_NAND){
+        error_display(NULL, NULL, "无法为系统应用设定区域。");
+        return;
+    }
     region_data* data = (region_data*) calloc(1, sizeof(region_data));
     for (int i = 0; i < RGN_MAX; i++) {
         list_item_old item;
@@ -95,7 +99,6 @@ void action_change_region(linked_list* items, list_item* selected) {
         item.data = action_set_region;
         data->items[i] = item;
     }
-    data->title_data = items;
     data->selected = selected;
     data->populated = true;
     data->count = RGN_MAX;

@@ -15,11 +15,11 @@ EXTRA_OUTPUT_FILES := servefiles
 
 BUILD_FLAGS := -Wno-format-truncation
 
-VERSION_PARTS := 0.0.6 # $(subst ., ,$(shell git describe --tags --abbrev=0))
+VERSION_PARTS := 0.0.7 # $(subst ., ,$(shell git describe --tags --abbrev=0))
 
 VERSION_MAJOR := 0
 VERSION_MINOR := 0
-VERSION_MICRO := 6
+VERSION_MICRO := 7
 
 CHINESE_VERSION := CV1
 

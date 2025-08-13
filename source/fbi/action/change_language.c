@@ -14,7 +14,6 @@
 // TODO duplicate code? (see section/config.c)
 typedef struct {
     list_item_old items[LNG_MAX];
-    linked_list* title_data;
     list_item* selected;
     u32 count;
     Handle cancelEvent;
@@ -83,6 +82,11 @@ static void language_update(ui_view* view, void* data, list_item_old** items, u3
 }
 
 void action_change_language(linked_list* items, list_item* selected) {
+    title_info* info = (title_info*)selected ->data;
+    if (info->mediaType == MEDIATYPE_NAND){
+        error_display(NULL, NULL, "无法为系统应用设定语言。");
+        return;
+    }
     language_data* data = (language_data*) calloc(1, sizeof(language_data));
     for (int i = 0; i < LNG_MAX; i++) {
         list_item_old item;
@@ -91,7 +95,6 @@ void action_change_language(linked_list* items, list_item* selected) {
         item.data = action_set_language;
         data->items[i] = item;
     }
-    data->title_data = items;
     data->selected = selected;
     data->populated = true;
     data->count = LNG_MAX;

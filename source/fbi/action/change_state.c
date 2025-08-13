@@ -13,7 +13,6 @@
 
 // TODO duplicate code? (see section/config.c)
 typedef struct {
-    linked_list* title_data;
     list_item* selected;
     u32 count;
     Handle cancelEvent;
@@ -89,7 +88,7 @@ static void state_update(ui_view* view, void* data, list_item_old** items, u32**
     }
 }
 
-void action_change_state(linked_list* items, list_item* selected) {
+void change_state(list_item* selected) {
     title_info* info = selected->data;
     char* country = country_for_title(info->titleId);
     if (strlen(country) == 0){
@@ -111,9 +110,25 @@ void action_change_state(linked_list* items, list_item* selected) {
         item.data = action_set_state;
         data->items[i] = item;
     }
-    data->title_data = items;
     data->selected = selected;
     data->populated = true;
     data->count = state_count;
     list_display_old("设定详细地区", "A：选择，B：返回", data, state_update, state_draw_top);
+}
+
+static void state_system_title_warning_onresponse(ui_view* view, void* data, u32 response) {
+    FS_ArchiveID archive = (FS_ArchiveID) data;
+
+    if(response == PROMPT_YES) {
+        change_state((list_item*)data);
+    }
+}
+
+void action_change_state(linked_list* items, list_item* selected) {
+    title_info* info = (title_info*) selected ->data;
+    if (info -> mediaType == MEDIATYPE_NAND){
+        prompt_display_yes_no("确认", "修改系统应用是危险的。\n这可能导致系统无法正常运行，\n请您确保自己知道正在做什么。\n\n确认继续?", COLOR_TEXT, (void*) selected, NULL, state_system_title_warning_onresponse);
+    } else {
+        change_state(selected);
+    }
 }

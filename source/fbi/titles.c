@@ -336,10 +336,10 @@ void titles_open() {
 
     data->showGameCard = true;
     data->showSD = true;
-    data->showNAND = true;
+    data->showNAND = false;
     data->sortById = false;
     data->sortByName = true;
     data->sortBySize = false;
 
-    list_display("应用", "A: 选择, X: 刷新, SELECT: 选项", data, titles_update, titles_draw_top);
+    list_display("应用", "A：选择，X：刷新，SELECT：选项", data, titles_update, titles_draw_top);
 }

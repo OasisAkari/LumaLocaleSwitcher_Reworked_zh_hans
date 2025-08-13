@@ -402,9 +402,9 @@ static void task_populate_titles_thread(void* arg) {
 
     if(R_SUCCEEDED(res = task_populate_titles_from(data, MEDIATYPE_GAME_CARD, false))) {
         if(R_SUCCEEDED(res = task_populate_titles_from(data, MEDIATYPE_SD, false))) {
-//            if(R_SUCCEEDED(res = task_populate_titles_from(data, MEDIATYPE_NAND, false))) {
-//                res = task_populate_titles_from(data, MEDIATYPE_NAND, true);
-//            }
+            if(R_SUCCEEDED(res = task_populate_titles_from(data, MEDIATYPE_NAND, false))) {
+                res = task_populate_titles_from(data, MEDIATYPE_NAND, true);
+            }
         }
     }
 
