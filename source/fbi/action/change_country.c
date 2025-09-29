@@ -98,7 +98,7 @@ static void country_update(ui_view* view, void* data, list_item_old** items, u32
 
 static void action_set_region(region_data* data, char* name, bool populated) {
     title_info* info = (title_info*) data->selected->data;
-    char* region_str = region_map(name);
+    char* region_str = region_map(region_to_string(region_from_string_display(name)));
     CountryInfo filtered_regions[COUNTRY_COUNT] = {};
     int country_count = filterCountriesByRegion(region_str, filtered_regions);
 //    char* msg = (char*) calloc(PATH_MAX+18, sizeof(char));
@@ -174,7 +174,7 @@ void change_country(list_item* selected){
     region_data* data = (region_data*) calloc(1, sizeof(region_data));
     for (int i = 0; i < RGN_MAX; i++) {
         list_item_old item;
-        strncpy(item.name, region_to_string(i), NAME_MAX);
+        strncpy(item.name, region_to_string_display(i), NAME_MAX);
         item.color = COLOR_TEXT;
         item.data = action_set_region;
         data->items[i] = item;

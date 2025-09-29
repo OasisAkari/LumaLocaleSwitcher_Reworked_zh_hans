@@ -313,8 +313,6 @@ Result set_region_language_country_state_for_title(u64 titleId, Region region, L
 
 Result set_region_for_title(u64 titleId, Region region) {
     Locale* locale = locale_for_title(titleId);
-    locale->country = "";
-    locale->state = "";
 
     return set_region_language_country_state_for_title(titleId, region, locale->language, locale->country, locale->state);
 }

@@ -5,9 +5,6 @@
 
 #include "../core/util.h"
 
-// 最大缓冲区大小定义
-
-
 
 StatesInfo filterStatesByCountry(char* country) {
     // 遍历所有国家信息
